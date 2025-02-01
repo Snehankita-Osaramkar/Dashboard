@@ -3,6 +3,8 @@ import { Moon, Sun, Search, Trash, Pencil } from 'lucide-react'
 import "./EnhancedVendorListView.scss"
 import { Link } from "react-router-dom";
 import {fetchData} from '../../Context/CommonFunction';
+const URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const EnhancedVendorListView = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -12,7 +14,7 @@ const EnhancedVendorListView = () => {
   // get data
   const loadData = async () => {
     try {
-      const data = await fetchData("http://localhost:5500/admin/vendors");
+      const data = await fetchData(`${URL}/admin/vendors`);
       setVendorList(data);
     } catch (err) {
       console.error("Error fetching vendors:", err.message);

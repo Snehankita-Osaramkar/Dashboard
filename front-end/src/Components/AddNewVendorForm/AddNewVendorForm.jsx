@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./AddNewVendorForm.scss";
 import { onChangeValidationCheck } from "../../Context/CommonFunction";
 import { useNavigate } from "react-router-dom";
+const URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const VendorForm = () => {
   const [vendor, setVendor] = useState({
@@ -47,7 +49,7 @@ const VendorForm = () => {
     console.log(vendor)
     if (validateForm()) {
       // Sending the data to the backend
-      let result = await fetch("http://localhost:5500/admin/addvendor", {
+      let result = await fetch(`${URL}/admin/addvendor`, {
         method: "POST",
         body: JSON.stringify(vendor),
         headers: {

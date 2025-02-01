@@ -4,6 +4,7 @@ import { Info } from 'lucide-react';
 import './EnhancedVendorDashboard.scss';
 import Modal from '../Modal/Modal';
 import {fetchData} from '../../Context/CommonFunction';
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -17,7 +18,7 @@ export default function EnhancedVendorDashboard() {
   // Fetch vendor List on component mount
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchData("https://vendor-dashboard-server.vercel.app/admin/vendors");
+      const data = await fetchData(`${URL}/admin/vendors`);
       setVendorList(data);
     };
     loadData();

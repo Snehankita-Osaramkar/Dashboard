@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import "././../AddNewVendorForm/AddNewVendorForm.scss"
 import { onChangeValidationCheck } from '../../Context/CommonFunction';
+const URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const UpdateVenderData = () => {
     const [vendor, setVendor] = useState({
@@ -40,7 +42,7 @@ const UpdateVenderData = () => {
     }, [])
 
     const getSingleVendorDetails = async () => {
-        let result = await fetch(`http://localhost:5500/admin/vendor/${params.id}`, {
+        let result = await fetch(`${URL}/admin/vendor/${params.id}`, {
         })
         result = await result.json();
         if (result) {
