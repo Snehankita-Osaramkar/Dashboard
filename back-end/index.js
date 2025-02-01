@@ -22,4 +22,4 @@ app.get("/",(req, res)=>{
 })
 app.use("/admin", adminRouter);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 5500);
