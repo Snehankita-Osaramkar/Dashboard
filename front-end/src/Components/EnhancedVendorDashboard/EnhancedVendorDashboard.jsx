@@ -17,7 +17,7 @@ export default function EnhancedVendorDashboard() {
   // Fetch vendor List on component mount
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchData("http://localhost:5500/admin/vendors");
+      const data = await fetchData("https://vendor-dashboard-server.vercel.app/admin/vendors");
       setVendorList(data);
     };
     loadData();

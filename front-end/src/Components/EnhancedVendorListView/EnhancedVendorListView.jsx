@@ -12,7 +12,7 @@ const EnhancedVendorListView = () => {
   // get data
   const loadData = async () => {
     try {
-      const data = await fetchData("http://localhost:5500/admin/vendors");
+      const data = await fetchData("https://vendor-dashboard-server.vercel.app/admin/vendors");
       setVendorList(data);
     } catch (err) {
       console.error("Error fetching vendors:", err.message);
@@ -63,7 +63,7 @@ const EnhancedVendorListView = () => {
   //Delete Vendor
   const deleteVendor = async (venderid) => {
     try {
-      const response = await fetch(`http://localhost:5500/admin/vendor/${venderid}`, {
+      const response = await fetch(`https://vendor-dashboard-server.vercel.app/admin/vendor/${venderid}`, {
         method: "DELETE",
       });
       if (response.ok) {
