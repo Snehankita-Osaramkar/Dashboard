@@ -14,7 +14,10 @@ dbconnect()
 
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin :"https://vendor-dashboard-server.vercel.app/",
+    credentials:true
+}));
 app.use(express.json());
 app.use(express.urlencoded());
 app.get("/",(req, res)=>{

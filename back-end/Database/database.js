@@ -8,7 +8,7 @@ async function dbconnect() {
     try {
         const uri = process.env.MONGO_URL;
         if (!uri) {
-            throw new Error("❌ MONGO_URI is not defined. Check your .env file.");
+            throw new Error("MONGO_URI is not defined. Check your .env file.");
         }
         await mongoose.connect(uri, {
             useNewUrlParser: true,
@@ -17,9 +17,9 @@ async function dbconnect() {
             socketTimeoutMS: 45000,
             bufferCommands: false
         });
-        console.log("✅ Successfully connected to MongoDB!");
+        console.log("Successfully connected to MongoDB!");
     } catch (error) {
-        console.error("❌ Database connection failed:", error);
+        console.error("Database connection failed:", error);
     }
 }
 
