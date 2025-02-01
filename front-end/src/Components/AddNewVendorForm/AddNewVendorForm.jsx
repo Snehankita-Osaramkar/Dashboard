@@ -47,7 +47,7 @@ const VendorForm = () => {
     console.log(vendor)
     if (validateForm()) {
       // Sending the data to the backend
-      let result = await fetch("https://vendor-dashboard-server.vercel.app/admin/addvendor", {
+      let result = await fetch("http://localhost:5500/admin/addvendor", {
         method: "POST",
         body: JSON.stringify(vendor),
         headers: {

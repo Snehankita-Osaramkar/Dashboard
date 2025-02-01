@@ -40,7 +40,7 @@ const UpdateVenderData = () => {
     }, [])
 
     const getSingleVendorDetails = async () => {
-        let result = await fetch(`https://vendor-dashboard-server.vercel.app/admin/vendor/${params.id}`, {
+        let result = await fetch(`http://localhost:5500/admin/vendor/${params.id}`, {
         })
         result = await result.json();
         if (result) {
@@ -66,7 +66,7 @@ const UpdateVenderData = () => {
         e.preventDefault();
         if (validateForm()) {
             // Sending the data to the backend
-            let result = await fetch(`https://vendor-dashboard-server.vercel.app/admin/vendor/${params.id}`, {
+            let result = await fetch(`http://localhost:5500/admin/vendor/${params.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
