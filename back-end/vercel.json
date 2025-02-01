@@ -10,10 +10,6 @@
         {
             "src": "/admin(/.*)?",
             "dest": "/index.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/index.js"
         }
     ],
     "methods": [
