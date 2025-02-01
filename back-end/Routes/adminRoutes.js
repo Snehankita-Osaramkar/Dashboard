@@ -7,5 +7,5 @@ adminRouter
 .get("/vendors",fetchVendorData)
 .delete("/vendor/:id", deleteVendorEntry)
 .get("/vendor/:id", getSingleVendorDetails)
-.put("/vendor/:id", updateVendorDetails)
+.put("/vendor/:id", updateVendorDetails);
 export default adminRouter;

@@ -2,16 +2,22 @@
     "version": 2,
     "builds": [
       {
-        "src": "./index.js",
+        "src": "index.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
+        "src": "/admin(/.*)?",
+        "dest": "/index.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "/admin",
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+        "dest": "/index.js"
       }
-    ]
+    ],
+    "env": {
+      "MONGO_URI": "mongodb+srv://snehankita:1999@cluster0.txxd6.mongodb.net/vendor-dashboard?retryWrites=true&w=majority&appName=Cluster0"  
+    }
   }
   
