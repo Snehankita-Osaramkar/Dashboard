@@ -1,0 +1,1 @@
+export const backend_url = "https://vendor-dashboard-api.vercel.app/admin"
