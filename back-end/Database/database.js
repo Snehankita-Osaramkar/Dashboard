@@ -8,7 +8,7 @@ async function dbconnect() {
     try {
         const uri = process.env.MONGO_URL;
         if (!uri) {
-            throw new Error("MONGO_URI is not defined. Check your .env file.");
+            throw new Error("MONGO_URL is not defined. Check your .env file.");
         }
         await mongoose.connect(uri, {
             useNewUrlParser: true,
