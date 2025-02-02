@@ -17,6 +17,7 @@ const UpdateVenderData = () => {
 
     const [errors, setErrors] = useState({});
     const params = useParams();
+    const [loading, setLoading] = useState(false); // <-- Loader state added
     const navigate = useNavigate();
 
     const validateForm = () => {
@@ -55,6 +56,7 @@ const UpdateVenderData = () => {
                 serviceProvided: result.serviceProvided
             }
             setVendor(initialInBuildValue)
+            setLoading(false)
         }
     }
 
@@ -66,6 +68,7 @@ const UpdateVenderData = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         if (validateForm()) {
             // Sending the data to the backend
             let result = await fetch(`${URL}/admin/vendor/${params.id}`, {
@@ -88,6 +91,10 @@ const UpdateVenderData = () => {
                 serviceProvided: "",
             });
             setErrors({});
+            setLoading(false)
+        } else {
+            setLoading(false)
+
         }
     };
     return (
@@ -165,7 +172,9 @@ const UpdateVenderData = () => {
                     {errors.serviceProvided && <span className="error">{errors.serviceProvided}</span>}
                 </div>
 
-                <button type="submit" className="submit-btn">Update Vendor Details</button>
+                <button type="submit" className="submit-btn" disabled={loading}>
+                    {loading ? <span className="loader"></span> : "Update Vendor Details"}
+                </button>
             </form>
         </div>
     )

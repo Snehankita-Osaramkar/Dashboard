@@ -4,7 +4,7 @@ import vendorModel from "../Models/vendorModel.js";
 const addVendorPage = async (req, res) => {
     try {
         const vendor = new vendorModel(req.body);
-        const result = await vendor.save({ w: "majority", j: true });
+        const result = await vendor.save();
         res.status(201).send(result); // Created status
     } catch (error) {
         console.error("Error adding vendor:", error);

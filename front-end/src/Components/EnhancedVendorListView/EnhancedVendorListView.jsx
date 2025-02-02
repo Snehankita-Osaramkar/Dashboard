@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { Moon, Sun, Search, Trash, Pencil } from 'lucide-react'
 import "./EnhancedVendorListView.scss"
 import { Link } from "react-router-dom";
-import {fetchData} from '../../Context/CommonFunction';
+import { fetchData } from '../../Context/CommonFunction';
 const URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const EnhancedVendorListView = () => {
   const [searchTerm, setSearchTerm] = useState('')
-
   const [vendorList, setVendorList] = useState([]);
+  const [loading, setLoading] = useState(true); // Added loading state
 
   // get data
   const loadData = async () => {
     try {
       const data = await fetchData(`${URL}/admin/vendors`);
       setVendorList(data);
+      setLoading(false)
     } catch (err) {
       console.error("Error fetching vendors:", err.message);
+      setLoading(false)
     }
   };
   // Fetch vendor List on component mount
@@ -65,85 +67,94 @@ const EnhancedVendorListView = () => {
   //Delete Vendor
   const deleteVendor = async (venderid) => {
     try {
+      setLoading(true)
       const response = await fetch(`${URL}/admin/vendor/${venderid}`, {
         method: "DELETE",
       });
       if (response.ok) {
         await loadData();
+        setLoading(false)
       } else {
         throw new Error('Failed to delete product');
       }
     } catch (err) {
       console.log(err.message)
+      setLoading(false)
     }
   }
   return (
     <div className="venderListViewContainer">
-      <div className="content-container">
-        <div className="card">
-          <div className="card-header">
-            <h2>Vendor List</h2>
-          </div>
-          {
-            (vendorList && vendorList.length > 0) ?
-              <div className="card-content">
-                <div className="search-bar">
-                  <label htmlFor="search">Search Vendors</label>
-                  <div className="search-input">
-                    <input
-                      id="search"
-                      type="text"
-                      placeholder="Search by name, type, or service"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="table-container">
-                  <table>
-                    <thead>
-                      <tr style={{borderBottom:"1px solid #ccc"}}>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Criticality</th>
-                        <th>Status</th>
-                        <th>Contact</th>
-                        <th>Service Provided</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredVendors.map((vendor,index) => (
-                        <tr key={index}>
-                          <td>{vendor.name}</td>
-                          <td>{vendor.type}</td>
-                          <td>
-                            <span className={`badge ${getCriticalityColor(vendor.criticality)}`}>
-                              {vendor.criticality}
-                            </span>
-                          </td>
-                          <td>
-                            <span className={`badge ${getStatusColor(vendor.status)}`}>
-                              {vendor.status}
-                            </span>
-                          </td>
-                          <td>{vendor.contact}</td>
-                          <td>{vendor.serviceProvided}</td>
-                          <td>
-                            <Link to={`/admin/vendor/${vendor._id}`}><Pencil size={20} color="green" /></Link>
-                            <Trash size={20} color="red" onClick={() => deleteVendor(vendor._id)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div> : <div className="card-content">No Data Found</div>
-          }
+      {loading ? (
+        <div className="loader-container">
+          <div className="loader"></div>
+          <p>Loading vendor data...</p>
         </div>
-      </div>
+      ) :
+        <div className="content-container">
+          <div className="card">
+            <div className="card-header">
+              <h2>Vendor List</h2>
+            </div>
+            {
+              (vendorList && vendorList.length > 0) ?
+                <div className="card-content">
+                  <div className="search-bar">
+                    <label htmlFor="search">Search Vendors</label>
+                    <div className="search-input">
+                      <input
+                        id="search"
+                        type="text"
+                        placeholder="Search by name, type, or service"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="table-container">
+                    <table>
+                      <thead>
+                        <tr style={{ borderBottom: "1px solid #ccc" }}>
+                          <th>Name</th>
+                          <th>Type</th>
+                          <th>Criticality</th>
+                          <th>Status</th>
+                          <th>Contact</th>
+                          <th>Service Provided</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredVendors.map((vendor, index) => (
+                          <tr key={index}>
+                            <td>{vendor.name}</td>
+                            <td>{vendor.type}</td>
+                            <td>
+                              <span className={`badge ${getCriticalityColor(vendor.criticality)}`}>
+                                {vendor.criticality}
+                              </span>
+                            </td>
+                            <td>
+                              <span className={`badge ${getStatusColor(vendor.status)}`}>
+                                {vendor.status}
+                              </span>
+                            </td>
+                            <td>{vendor.contact}</td>
+                            <td>{vendor.serviceProvided}</td>
+                            <td>
+                              <Link to={`/admin/vendor/${vendor._id}`}><Pencil size={20} color="green" /></Link>
+                              <Trash size={20} color="red" onClick={() => deleteVendor(vendor._id)} />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div> : <div className="card-content">No Data Found</div>
+            }
+          </div>
+        </div>}
     </div>
   )
 }
 
-export default EnhancedVendorListView
+export default EnhancedVendorListView;

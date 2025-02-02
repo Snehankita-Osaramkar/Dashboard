@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
 import { Info } from 'lucide-react';
 import './EnhancedVendorDashboard.scss';
 import Modal from '../Modal/Modal';
-import {fetchData} from '../../Context/CommonFunction';
+import { fetchData } from '../../Context/CommonFunction';
 const URL = import.meta.env.VITE_API_BASE_URL;
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
@@ -13,13 +13,20 @@ export default function EnhancedVendorDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const [loading, setLoading] = useState(true); // Added loading state
 
 
   // Fetch vendor List on component mount
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchData(`${URL}/admin/vendors`);
-      setVendorList(data);
+      try {
+        const data = await fetchData(`${URL}/admin/vendors`);
+        setVendorList(data);
+      } catch (error) {
+        console.error("Error fetching vendors:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     loadData();
   }, []);
@@ -59,8 +66,12 @@ export default function EnhancedVendorDashboard() {
   return (
     <>
       <div className="dashboardContainer">
-
-        {
+        {loading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+            <p>Loading vendor data...</p>
+          </div>
+        ) :
           (vendorList && vendorList.length > 0) ?
             <main>
               <h1 className="main-heading">Vendor Dashboard</h1>

@@ -4,7 +4,6 @@ import { onChangeValidationCheck } from "../../Context/CommonFunction";
 import { useNavigate } from "react-router-dom";
 const URL = import.meta.env.VITE_API_BASE_URL;
 
-
 const VendorForm = () => {
   const [vendor, setVendor] = useState({
     name: "",
@@ -16,8 +15,8 @@ const VendorForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // <-- Loader state added
   const navigate = useNavigate();
-
 
   const validateForm = () => {
     let newErrors = {};
@@ -43,32 +42,37 @@ const VendorForm = () => {
     setErrors({ ...errors, ...fieldErrors });
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(vendor)
+    console.log(vendor);
     if (validateForm()) {
-      // Sending the data to the backend
-      let result = await fetch(`${URL}/admin/addvendor`, {
-        method: "POST",
-        body: JSON.stringify(vendor),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      setLoading(true); // Show loader
+      try {
+        let result = await fetch(`${URL}/admin/addvendor`, {
+          method: "POST",
+          body: JSON.stringify(vendor),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      result = await result.json();
-      console.log(result);
-      navigate("/")
-      setVendor({
-        name: "",
-        type: "",
-        criticality: "",
-        status: "",
-        contact: "",
-        serviceProvided: "",
-      });
-      setErrors({});
+        result = await result.json();
+        console.log(result);
+        navigate("/");
+        setVendor({
+          name: "",
+          type: "",
+          criticality: "",
+          status: "",
+          contact: "",
+          serviceProvided: "",
+        });
+        setErrors({});
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      } finally {
+        setLoading(false); // Hide loader after request
+      }
     }
   };
 
@@ -147,7 +151,9 @@ const VendorForm = () => {
           {errors.serviceProvided && <span className="error">{errors.serviceProvided}</span>}
         </div>
 
-        <button type="submit" className="submit-btn">Add Vendor</button>
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? <span className="loader"></span> : "Add Vendor"}
+        </button>
       </form>
     </div>
   );
