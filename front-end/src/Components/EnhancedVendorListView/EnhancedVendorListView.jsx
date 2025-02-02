@@ -65,7 +65,7 @@ const EnhancedVendorListView = () => {
   //Delete Vendor
   const deleteVendor = async (venderid) => {
     try {
-      const response = await fetch(`http://localhost:5500/admin/vendor/${venderid}`, {
+      const response = await fetch(`${URL}/admin/vendor/${venderid}`, {
         method: "DELETE",
       });
       if (response.ok) {

@@ -1,29 +1,3 @@
-// import express from "express";
-// import cors from "cors";
-// import dbconnect from "./Database/database.js";
-// import adminRouter from "./Routes/adminRoutes.js";
-// import dotenv from "dotenv";
-// dotenv.config();
-
-
-// dbconnect()
-//   .then(() => console.log("Connected"))
-//   .catch((error) => {
-//     console.error("Database connection failed:", error);
-//   });
-
-
-// const app = express();
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded());
-// app.get("/",(req, res)=>{
-//     res.send("hello world")
-// })
-// app.use("/admin", adminRouter);
-
-// app.listen(process.env.PORT || 5500);
-
 import express from "express";
 import cors from "cors";
 import dbconnect from "./Database/database.js";
@@ -40,7 +14,7 @@ app.use(express.urlencoded());
 // Connect to MongoDB before starting the server
 (async () => {
     await dbconnect();  // Ensures MongoDB is connected first
-    console.log("🚀 Connected to MongoDB. Starting Server...");
+    console.log("Connected to MongoDB. Starting Server...");
 
     app.get("/", (req, res) => {
         res.send("Hello World!");
@@ -50,6 +24,6 @@ app.use(express.urlencoded());
 
     const PORT = process.env.PORT || 5500;
     app.listen(PORT, () => {
-        console.log(`🚀 Server running on port ${PORT}`);
+        console.log(`Server running on port ${PORT}`);
     });
 })();

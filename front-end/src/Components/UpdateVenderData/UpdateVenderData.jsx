@@ -68,7 +68,7 @@ const UpdateVenderData = () => {
         e.preventDefault();
         if (validateForm()) {
             // Sending the data to the backend
-            let result = await fetch(`http://localhost:5500/admin/vendor/${params.id}`, {
+            let result = await fetch(`${URL}/admin/vendor/${params.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
