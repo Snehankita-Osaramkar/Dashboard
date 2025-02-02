@@ -81,7 +81,7 @@ const UpdateVenderData = () => {
 
             result = await result.json();
             console.log(result);
-            navigate("/")
+            navigate("/vendor");
             setVendor({
                 name: "",
                 type: "",
